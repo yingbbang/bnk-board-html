@@ -119,22 +119,23 @@
 
 .board-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .board-title {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;   /* 핵심 */
+  align-items: flex-start;  /* 금융권 기본: 좌측 정렬 */
+  gap: 6px;
 }
 
 .board-logo {
-  height: 28px;          /* 지금보다 살짝 줄이는 게 정답 */
+  height: 10px;          /* 지금보다 살짝 줄이는 게 정답 */
 }
 
 .board-header h1 {
+    margin: 0;
   font-size: 22px;
   font-weight: 600;
 }
@@ -146,3 +147,21 @@
 .board-table td:nth-child(3) {
   text-align: center;
 }
+
+/* 로고 줄 */
+.board-logo-row {
+  display: flex;
+  align-items: center;
+}
+
+/* 제목 + 버튼 같은 기준선 */
+.board-action-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;   /* ★ 이 한 줄이 높이 맞춤의 핵심 */
+}
+
+.board-action-row h1 {
+  margin: 0;             /* ★ 기본 margin 제거 안 하면 절대 안 맞음 */
+  font-size: 22px;
+  font-weight: 600;

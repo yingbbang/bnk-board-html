@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8" />
   <title>BNK Board - List</title>
@@ -10,17 +11,25 @@
 
 <body>
 
-<div class="container">
+  <div class="container">
 
-  <!-- 게시판 헤더 (여기 추가) -->
 <div class="board-header">
-  <div class="board-title">
-    <img src="./assets/logo/topBrLogo2.png" alt="BNK 부산은행" class="board-logo" />
-    <h1>게시판 목록</h1>
+
+  <!-- 1행: 로고 -->
+  <div class="board-logo-row">
+    <a href="index.html" class="logo-link">
+      <img src="./assets/logo/topBrLogo2.png" alt="BNK 부산은행" class="board-logo" />
+    </a>
   </div>
 
-  <button class="primary" onclick="location.href='write.html'">글쓰기</button>
+  <!-- 2행: 게시판 목록 + 글쓰기 (같은 높이) -->
+  <div class="board-action-row">
+    <h1>게시판 목록</h1>
+    <button class="primary" onclick="location.href='write.html'">글쓰기</button>
+  </div>
+
 </div>
+
 
 
 
@@ -47,4 +56,5 @@
   <script src="./assets/js/board_list.js"></script>
 
 </body>
+
 </html>
