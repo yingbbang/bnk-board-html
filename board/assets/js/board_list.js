@@ -1,5 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+  /* =========================
+   * 상수 / 상태
+   * ========================= */
+  const PAGE_SIZE = 20;
+  const PAGE_GROUP_SIZE = 3;
+
+  let currentPage = Number(Util.qs("page")) || 1;
+  let currentCategory = "";
+  let currentKeyword = "";
+
   const CATEGORY_LABEL = {
     IT: "IT·시스템",
     SECURITY: "보안",
@@ -14,24 +24,27 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   /* =========================
-   * 상태 변수
-   * ========================= */
-  let currentCategory = "";
-  let currentKeyword = "";
-
-  /* =========================
-   * 데이터 로드 + 정렬
+   * 데이터 로딩
    * ========================= */
   const allBoards = (StorageDB.get("BOARD") || [])
-    .filter(b => b.status === "ACTIVE")
-    .sort((a, b) =>
-      (b.is_pinned === true) - (a.is_pinned === true) ||
-      new Date(b.created_at) - new Date(a.created_at)
-    );
+    .filter(b => b.status === "ACTIVE");
 
   const stats = StorageDB.get("BOARD_STAT") || [];
+  const statMap = {};
+  stats.forEach(s => statMap[s.board_id] = s);
+
+  const noticeBoards = allBoards
+    .filter(b => b.is_pinned === true)
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+  const normalBoards = allBoards
+    .filter(b => !b.is_pinned)
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
   const tbody = document.getElementById("boardList");
+  const pagination = document.getElementById("pagination");
   const categoryButtons = document.querySelectorAll(".board-category button");
+  const keywordInput = document.getElementById("keyword");
 
   /* =========================
    * 렌더링
@@ -40,12 +53,9 @@ document.addEventListener("DOMContentLoaded", () => {
     tbody.innerHTML = "";
 
     boards.forEach(b => {
-      const stat = stats.find(s => s.board_id === b.id) || {
-        view_count: 0,
-        like_count: 0
-      };
-
+      const stat = statMap[b.id] || { view_count: 0, like_count: 0 };
       const tr = document.createElement("tr");
+
       if (b.is_pinned) tr.classList.add("pinned");
 
       tr.innerHTML = `
@@ -64,55 +74,112 @@ document.addEventListener("DOMContentLoaded", () => {
         <td class="text-center">${b.writer || "익명"}</td>
         <td class="text-center">${Util.fmt(b.created_at)}</td>
         <td class="text-center">${stat.view_count}</td>
-        <td class="text-center">${stat.like_count || 0}</td>
+        <td class="text-center">${stat.like_count}</td>
       `;
+
       tbody.appendChild(tr);
     });
   }
 
   /* =========================
-   * 필터 적용 (AND 조건)
+   * 필터 + 페이지네이션 적용
    * ========================= */
   function applyFilter() {
-    const filtered = allBoards.filter(b => {
+    const keyword = currentKeyword.toLowerCase();
+
+    const filteredNormal = normalBoards.filter(b => {
       const matchCategory =
         !currentCategory || b.category === currentCategory;
 
       const matchKeyword =
-        !currentKeyword ||
-        b.title.includes(currentKeyword) ||
-        b.content.includes(currentKeyword);
+        !keyword ||
+        b.title.toLowerCase().includes(keyword) ||
+        b.content.toLowerCase().includes(keyword);
 
       return matchCategory && matchKeyword;
     });
 
-    render(filtered);
+    const totalCount = filteredNormal.length;
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+    if (currentPage > totalPages) currentPage = 1;
+
+    const startIdx = (currentPage - 1) * PAGE_SIZE;
+    const pageBoards =
+      filteredNormal.slice(startIdx, startIdx + PAGE_SIZE);
+
+    render([...noticeBoards, ...pageBoards]);
+    renderPagination(totalPages);
   }
 
   /* =========================
-   * 초기 렌더
+   * 페이지 그룹 렌더링
    * ========================= */
-  render(allBoards);
+  function renderPagination(totalPages) {
+    if (!pagination || totalPages === 0) {
+      pagination.innerHTML = "";
+      return;
+    }
+
+    pagination.innerHTML = "";
+
+    const currentGroup = Math.ceil(currentPage / PAGE_GROUP_SIZE);
+    const startPage = (currentGroup - 1) * PAGE_GROUP_SIZE + 1;
+    const endPage =
+      Math.min(startPage + PAGE_GROUP_SIZE - 1, totalPages);
+
+    if (currentPage > 1) addPageButton("«", 1);
+    if (startPage > 1) addPageButton("‹", startPage - 1);
+
+    for (let i = startPage; i <= endPage; i++) {
+      addPageButton(i, i, i === currentPage);
+    }
+
+    if (endPage < totalPages) addPageButton("›", endPage + 1);
+    if (currentPage < totalPages) addPageButton("»", totalPages);
+  }
+
+  function addPageButton(label, page, isActive = false) {
+    const btn = document.createElement("button");
+    btn.textContent = label;
+    if (isActive) btn.classList.add("active");
+
+    btn.addEventListener("click", () => {
+      currentPage = page;
+      applyFilter();
+    });
+
+    pagination.appendChild(btn);
+  }
 
   /* =========================
-   * 카테고리 필터
+   * 이벤트 바인딩
    * ========================= */
+
+  // 카테고리
   categoryButtons.forEach(btn => {
     btn.addEventListener("click", () => {
       categoryButtons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
 
       currentCategory = btn.dataset.category || "";
+      currentPage = 1;
       applyFilter();
     });
   });
 
-  /* =========================
-   * 검색
-   * ========================= */
-  document.getElementById("searchBtn")?.addEventListener("click", () => {
-    currentKeyword = document.getElementById("keyword").value.trim();
-    applyFilter();
+  // 검색 (Enter만)
+  keywordInput?.addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+      currentKeyword = keywordInput.value.trim();
+      currentPage = 1;
+      applyFilter();
+    }
   });
+
+  /* =========================
+   * 초기 실행
+   * ========================= */
+  applyFilter();
 
 });
