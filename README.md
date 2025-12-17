@@ -10,6 +10,8 @@
 <br>
 <img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-001.png">
 <br>
+<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-002.png">
+<br>
 
 ## 1. 프로젝트 목적
 
