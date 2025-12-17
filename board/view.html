@@ -1,72 +1,65 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8" />
   <title>BNK Board - View</title>
-<link rel="stylesheet" href="./assets/css/common.css">
-<link rel="stylesheet" href="./assets/css/board.css">
 
+  <link rel="stylesheet" href="./assets/css/common.css">
+  <link rel="stylesheet" href="./assets/css/board.css">
 </head>
+
 <body>
 
-<div class="container">
-  <div class="board-view">
+  <div class="container">
 
-    <h1 class="page-title">게시글 상세</h1>
+    <!-- header는 제목까지만 -->
+    <div class="board-header">
+      <div class="board-logo-row">
+        <a href="index.html" class="logo-link">
+          <img src="./assets/logo/topBrLogo2.png" alt="BNK 부산은행" class="board-logo" />
+        </a>
+      </div>
 
-    <div class="board-view-header">
-      <h2 class="title"></h2>
-      <div class="meta"></div>
+      <div class="board-action-row">
+        <h1>게시글 상세</h1>
+      </div>
     </div>
 
-    <div class="board-view-content content"></div>
 
-    <div class="board-view-actions actions">
+    <!-- 하단에 액션 영역 추가 (board-view 아래) -->
+
+    <div class="board-view">
+      <div class="board-view-header">
+        <h2 class="title"></h2>
+        <div class="meta"></div>
+      </div>
+
+      <div id="content" class="board-view-content"></div>
+      <!-- 첨부파일 영역 -->
+      <div class="board-attach">
+        <h3>첨부파일</h3>
+        <div id="attachList"></div>
+      </div>
+
+    </div>
+
+    <!-- 하단 액션 -->
+    <div class="board-view-actions bottom-actions">
       <button id="btnEdit">수정</button>
       <button id="btnDelete">삭제</button>
       <button onclick="location.href='index.html'">목록</button>
     </div>
 
+
   </div>
-</div>
 
-<script>
-  const id = Number(Util.qs("id"));
-  const boards = StorageDB.get("BOARD", []);
-  const stats  = StorageDB.get("BOARD_STAT", []);
-
-  const board = boards.find(b => b.id === id);
-  if (!board || board.status === "DELETED") {
-    alert("존재하지 않는 게시글입니다.");
-    location.href = "index.html";
-  }
-
-
-  document.getElementById("content").innerHTML = `
-    <h2>${Util.escapeHtml(board.title)}</h2>
-    <p>${Util.escapeHtml(board.content)}</p>
-    <p>상태: ${board.status}</p>
-    <p>작성일: ${Util.fmt(board.created_at)}</p>
-    <p>수정일: ${Util.fmt(board.updated_at)}</p>
-  `;
-
-  function goEdit() {
-    location.href = `edit.html?id=${id}`;
-  }
-
-  function softDelete() {
-    if (!confirm("삭제 처리하시겠습니까?")) return;
-    board.status = "DELETED";
-    board.updated_at = new Date().toISOString();
-    StorageDB.set("BOARD", boards);
-    alert("삭제되었습니다.");
-    location.href = "index.html";
-  }
-</script>
-<script src="./assets/js/storage.js"></script>
-<script src="./assets/js/seed.js"></script>
-<script src="./assets/js/util.js"></script>
-<script src="./assets/js/board_view.js"></script>
+  <!-- 스크립트는 반드시 아래 순서 -->
+  <script src="./assets/js/storage.js"></script>
+  <script src="./assets/js/seed.js"></script>
+  <script src="./assets/js/util.js"></script>
+  <script src="./assets/js/board_view.js"></script>
 
 </body>
+
 </html>

@@ -1,167 +1,287 @@
-/* =========================
-   Board Table (List)
-   ========================= */
+/* =================================================
+   0) 게시판 공통 레이아웃 영역 (Header)
+   - list / view / write 화면 상단의 공통 헤더
+   - "로고(상단) + 페이지 타이틀/액션(하단)" 2단 구조를 전제로 함
+   - 금융권 UI에서 가장 흔한 패턴: 상단은 정체성(브랜드), 하단은 기능(행동/타이틀)
+   ================================================= */
+
+.board-header {
+  /* 헤더 아래쪽에 여백을 주어 내용 영역과 시각적으로 분리 */
+  padding-bottom: 16px;
+
+  /* 헤더 하단 구분선: "여기부터 본문"이라는 경계 역할 */
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* 로고가 들어가는 줄(첫 번째 줄)
+   - 로고만 배치되는 row
+   - 이후 타이틀/버튼 줄과 분리되어, 로고 크기가 정렬에 간섭하지 않게 함 */
+.board-logo-row {
+  display: flex;
+
+  /* 로고 이미지를 세로 중앙 정렬(이미지 기준선 어긋남 방지) */
+  align-items: center;
+}
+
+/* 상단 로고 크기
+   - 너무 크면 홍보/포스터 느낌
+   - 너무 작으면 장식처럼 보임
+   - 인트라넷/업무 시스템에서 무난한 높이: 24~32px */
+.board-logo {
+  height: 28px;
+}
+
+/* 타이틀 + 버튼이 같은 줄에 놓이는 영역(두 번째 줄)
+   - 좌: 페이지 타이틀(h1)
+   - 우: 주요 액션 버튼(글쓰기/저장/목록 등)
+   - 이 줄에서 "타이틀과 버튼을 같은 높이"로 맞추는 것이 핵심 */
+.board-action-row {
+  display: flex;
+
+  /* 좌/우 끝으로 밀어 배치: 좌측 타이틀, 우측 액션 */
+  justify-content: space-between;
+
+  /* 타이틀과 버튼을 세로 기준선(높이)을 동일하게 맞춤 */
+  align-items: center;
+}
+
+/* 헤더 타이틀 스타일
+   - h1은 브라우저 기본 margin이 있어서 레이아웃이 어긋나기 쉬움
+   - 반드시 margin을 0으로 초기화 */
+.board-action-row h1 {
+  margin: 0;
+
+  /* 금융 UI는 과한 타이포보다 절제된 크기가 안정적 */
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* =================================================
+   1) 게시판 목록 테이블 (List)
+   - index.html 목록 화면의 테이블 스타일
+   - "고정된 컬럼 정렬 + 얇은 구분선 + hover 강조"가 업무 UI 기본
+   ================================================= */
 
 .board-table {
   width: 100%;
+
+  /* 테이블이 헤더 아래에 붙어 답답해 보이지 않도록 간격 확보 */
+  margin-top: 12px;
+
+  /* 셀 경계를 한 줄로 합침(이중선 방지) */
   border-collapse: collapse;
+
+  /* 행이 흰색 바탕을 갖도록 지정(바탕색 통일) */
   background: #fff;
 }
 
 .board-table th,
 .board-table td {
+  /* 셀 내부 여백: 너무 넓으면 정보 밀도 낮아짐, 너무 좁으면 가독성 떨어짐 */
   padding: 10px 8px;
+
+  /* 행 구분선(업무 시스템 기본 톤) */
   border-bottom: 1px solid #e0e0e0;
+
+  /* 기본은 좌측 정렬 */
   text-align: left;
 }
 
+/* 테이블 헤더(th)
+   - 목록의 컬럼 의미를 명확히 보여주는 영역 */
 .board-table th {
+  /* 헤더만 약간 톤을 올려 구분 */
   background: #f1f3f5;
+
+  /* 헤더는 본문보다 약간 굵게 */
   font-weight: 600;
 }
 
+/* 마우스 오버 시 행 강조
+   - 선택 행을 쉽게 찾게 하는 UX
+   - 너무 진하면 업무 시스템에 과하게 보임 */
 .board-table tr:hover {
   background: #fafafa;
 }
 
+/* 제목 링크는 너무 굵게 하면 광고/홍보 느낌
+   - 살짝만 강조 */
 .board-table .title a {
   font-weight: 500;
 }
 
-/* =========================
-   Board View
-   ========================= */
+/* 상태(Status) 컬럼은 가운데 정렬하는 것이 일반적
+   - 배지 형태(약 pill)로 보이기 때문에 중앙 정렬이 안정적 */
+.board-table td:nth-child(3) {
+  text-align: center;
+}
+
+/* =================================================
+   2) 게시글 상세 화면 (View)
+   - view.html 상세 페이지의 제목/메타/본문 구성
+   - 헤더와 본문 구분이 핵심
+   ================================================= */
 
 .board-view {
+  /* 헤더와 본문 사이 간격 */
   margin-top: 24px;
 }
 
+/* 상세 상단 영역(제목/메타 정보)
+   - 타이틀/상태/작성일 등을 담는 영역 */
 .board-view-header {
+  /* 위아래 여백으로 타이틀 블록을 만들기 */
   padding: 24px 0;
-  border-bottom: 1px solid #e5e7eb;
+
+  /* 주의:
+     - header 하단 구분선을 이미 쓰고 있다면 여기 border를 넣으면 줄이 중복됨
+     - "줄이 사라지면 좋겠다"면 여기 border를 제거하는 쪽으로 조정 */
+  /* border-bottom: 1px solid #e5e7eb; */
 }
 
+/* 상세 제목 텍스트 */
 .board-view-header .title {
   font-size: 22px;
   font-weight: 600;
   margin-bottom: 8px;
 }
 
+/* 상세 메타(상태/작성일 등)
+   - 본문보다 톤 다운해서 보조 정보로 처리 */
 .board-view-header .meta {
   font-size: 14px;
   color: #6b7280;
 }
 
+/* 상세 본문 영역 */
 .board-view-content {
+  /* 본문은 여백이 있어야 읽기 쉬움 */
   padding: 32px 0;
+
+  /* 본문 텍스트는 너무 크면 지면처럼 과해짐 */
   font-size: 15px;
+
+  /* 줄 간격으로 가독성 확보 */
   line-height: 1.7;
+
+  /* 본문 기본 컬러(완전 검정은 눈 피로, 약간 부드럽게) */
   color: #111827;
+
+  /* 내용이 짧을 때 화면이 너무 허전하지 않게 최소 높이 확보 */
   min-height: 200px;
 }
 
+/* 상세 하단 액션(수정/삭제/목록 등)
+   - 사용자가 "읽은 다음" 행동하는 영역
+   - 본문 아래에서 구분선 + 우측 정렬이 실무에서 안정적 */
 .board-view-actions {
-  padding-top: 24px;
+  margin-top: 24px;
+  padding-top: 16px;
+
+  /* 본문과 액션 영역을 구분하는 상단 구분선 */
   border-top: 1px solid #e5e7eb;
+
   display: flex;
   gap: 8px;
+
+  /* 버튼은 보통 우측 정렬(업무 화면 기본) */
+  justify-content: flex-end;
 }
 
-
-/* =========================
-   Board Form (Write / Edit)
-   ========================= */
+/* =================================================
+   3) 작성/수정 폼 (Write / Edit)
+   - write.html / edit.html에서 입력 폼 박스 스타일
+   ================================================= */
 
 .board-form {
   background: #fff;
+
+  /* 폼 내부 여백 */
   padding: 24px;
+
+  /* 박스 테두리로 입력 영역임을 명확히 */
   border: 1px solid #ddd;
 }
 
+/* 폼 하단 액션(저장/취소 등)
+   - 일반적으로 우측 정렬 */
 .board-form .form-actions {
   margin-top: 20px;
   text-align: right;
 }
 
-/* =========================
-   Status Badge
-   ========================= */
+/* =================================================
+   4) 상태 배지(Status Badge)
+   - ACTIVE/HIDDEN/DELETED/LOCKED 등
+   - "짧은 텍스트 + pill 배지"는 금융 UI에서 흔한 표현
+   ================================================= */
 
 .status {
   display: inline-block;
+
+  /* 배지 내부 여백 */
   padding: 2px 8px;
+
+  /* 글자 크기(본문보다 작게) */
   font-size: 12px;
+
+  /* pill 형태 */
   border-radius: 10px;
 }
 
+/* 정상 게시글 */
 .status.ACTIVE {
   background: #e3f2fd;
   color: #1565c0;
 }
 
+/* 숨김 처리 */
 .status.HIDDEN {
   background: #fff3e0;
   color: #ef6c00;
 }
 
+/* 논리삭제(실무에서는 물리삭제 금지 케이스 많음) */
 .status.DELETED {
   background: #fbe9e7;
   color: #c62828;
 }
 
+/* 잠금(수정/삭제 제한) */
 .status.LOCKED {
   background: #eceff1;
   color: #37474f;
 }
 
+/* =================================================
+   5) 첨부파일(상세 화면)
+   - 이미지면 썸네일, 문서면 링크 형태로 보여주는 영역
+   - 본문 아래 "보조 정보"로 분리하는 것이 기본
+   ================================================= */
 
-
-
-.board-header {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.board-attach {
+  /* 본문과 첨부파일 영역 간격 */
+  margin-top: 32px;
 }
 
-.board-title {
-  display: flex;
-  flex-direction: column;   /* 핵심 */
-  align-items: flex-start;  /* 금융권 기본: 좌측 정렬 */
-  gap: 6px;
-}
-
-.board-logo {
-  height: 10px;          /* 지금보다 살짝 줄이는 게 정답 */
-}
-
-.board-header h1 {
-    margin: 0;
-  font-size: 22px;
+.board-attach h3 {
+  /* 첨부파일 섹션 제목 */
+  font-size: 15px;
   font-weight: 600;
+  margin-bottom: 12px;
 }
 
-.board-table {
-  margin-top: 12px;   /* mt-20 줄이거나 제거해도 됨 */
+/* 파일 1개 단위 블록 */
+.attach-item {
+  margin-bottom: 8px;
 }
 
-.board-table td:nth-child(3) {
-  text-align: center;
+/* 이미지 썸네일
+   - 너무 크면 본문 흐름 방해
+   - 너무 작으면 확인 가치가 떨어짐 */
+.attach-thumb {
+  max-width: 200px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 6px;
+  display: block;
 }
-
-/* 로고 줄 */
-.board-logo-row {
-  display: flex;
-  align-items: center;
-}
-
-/* 제목 + 버튼 같은 기준선 */
-.board-action-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;   /* ★ 이 한 줄이 높이 맞춤의 핵심 */
-}
-
-.board-action-row h1 {
-  margin: 0;             /* ★ 기본 margin 제거 안 하면 절대 안 맞음 */
-  font-size: 22px;
-  font-weight: 600;
