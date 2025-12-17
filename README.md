@@ -9,8 +9,8 @@
 ---
 <br>
 
-### index.html (list)
-<a href="https://yingbbang.github.io/yingbbang/bnk-board-html/blob/main/board/index.html"> 
+### index.html (list) ## 이미지를 누르면 해당 페이지로 이동합니다.
+<a href="https://yingbbang.github.io/bnk-board-html/board/index.html"> 
 <img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-index.png"></a>
 
 ### view.html (view)
