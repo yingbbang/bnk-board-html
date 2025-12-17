@@ -7,6 +7,9 @@
 **금융권 실무 기준의 데이터 구조, 상태 관리, 감사·이력 개념**을 반영하는 것을 목표로 한다.
 
 ---
+<br>
+<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-001.png">
+<br>
 
 ## 1. 프로젝트 목적
 
