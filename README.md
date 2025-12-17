@@ -8,7 +8,20 @@
 
 ---
 <br>
+# index.html(list)
 <img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-001.png">
+<br>
+# view.html(view)
+<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-002.png">
+<br>
+# write.html(write)
+<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-003.png">
+<br>
+# edit.html(edit)
+<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-004.png">
+<br>
+# delete.html(delete)
+<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-005.png">
 <br>
 
 ## 1. 프로젝트 목적
