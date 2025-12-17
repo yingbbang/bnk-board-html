@@ -3,28 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <title>BNK Board - Write</title>
-<link rel="stylesheet" href="./assets/css/common.css">
-<link rel="stylesheet" href="./assets/css/board.css">
 
+  <link rel="stylesheet" href="./assets/css/common.css">
+  <link rel="stylesheet" href="./assets/css/board.css">
 </head>
+
 <body>
 
-<h1>글쓰기</h1>
+<div class="container">
 
-<form id="writeForm">
-  <div>
-    <input type="text" id="title" placeholder="제목" required>
-  </div>
-  <div>
-    <textarea id="content" placeholder="내용" rows="6" required></textarea>
-  </div>
-  <button type="submit">등록</button>
-  <button type="button" onclick="location.href='index.html'">취소</button>
-</form>
+  <!-- 게시판 헤더 -->
+  <div class="board-header">
 
+    <!-- 로고 -->
+    <div class="board-logo-row">
+      <a href="index.html" class="logo-link">
+        <img src="./assets/logo/topBrLogo2.png" alt="BNK 부산은행" class="board-logo">
+      </a>
+    </div>
+
+    <!-- 제목 -->
+    <div class="board-action-row">
+      <h1>게시글 작성</h1>
+    </div>
+
+  </div>
+
+  <!-- 작성 폼 -->
+  <form id="writeForm" class="board-form">
+
+    <!-- 제목 -->
+    <div class="form-group">
+      <label for="title">제목</label>
+      <input type="text" id="title" required>
+    </div>
+
+    <!-- 내용 -->
+    <div class="form-group">
+      <label for="content">내용</label>
+      <textarea id="content" rows="8" required></textarea>
+    </div>
+
+    <!-- 첨부파일 -->
+    <div class="form-group">
+      <label for="files">첨부파일</label>
+      <input type="file" id="files" multiple>
+      <p class="form-help">이미지 및 문서 파일을 첨부할 수 있습니다.</p>
+    </div>
+
+    <!-- 액션 -->
+    <div class="form-actions">
+      <button type="submit" class="primary">등록</button>
+      <button type="button" onclick="location.href='index.html'">취소</button>
+    </div>
+
+  </form>
+
+</div>
 
 <script src="./assets/js/storage.js"></script>
-<script src="./assets/js/seed.js"></script>
 <script src="./assets/js/util.js"></script>
 <script src="./assets/js/board_write.js"></script>
 

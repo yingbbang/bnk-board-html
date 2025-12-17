@@ -161,3 +161,40 @@
   margin-bottom: 6px;
   display: block;
 }
+
+
+
+/* =================================================
+   Form Elements (Write / Edit)
+   ================================================= */
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-help {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #6b7280;
+}
