@@ -10,7 +10,8 @@
 <br>
 
 ### index.html (list)
-<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-index.png">
+<a href="https://yingbbang.github.io/yingbbang/bnk-board-html/blob/main/board/index.html"> 
+<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-index.png"></a>
 
 ### view.html (view)
 <img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-view.png">
