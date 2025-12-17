@@ -16,13 +16,13 @@
 <img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-view.png">
 
 ### write.html (write)
-<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-003.png">
+<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-write.png">
 
 ### edit.html (edit)
-<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-004.png">
+<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-edit.png">
 
 ### delete.html (delete)
-<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-005.png">
+<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-delete.png">
 
 ### ERD
 <img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/erd.png">
