@@ -13,30 +13,30 @@
 <br>
 
 ### index.html (list) ## 이미지를 누르면 해당 페이지로 이동합니다.
-<a href="https://yingbbang.github.io/bnk-board-html/board/index.html"> 
-<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-index.png"></a>
+<a href="https://yingbbang.github.io/bnk-board-html-list/board/index.html"> 
+<img src="https://github.com/yingbbang/bnk-board-html-list/blob/main/board/assets/dummy/snapshot-index.png"></a>
 
 ### view.html (view)
-<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-view.png">
+<img src="https://github.com/yingbbang/bnk-board-html-list/blob/main/board/assets/dummy/snapshot-view.png">
 
 ### write.html (write) ## 이미지를 누르면 해당 페이지로 이동합니다.
-<a href="https://yingbbang.github.io/bnk-board-html/board/write.html"> 
-<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-write.png"></a>
+<a href="https://yingbbang.github.io/bnk-board-html-list/board/write.html"> 
+<img src="https://github.com/yingbbang/bnk-board-html-list/blob/main/board/assets/dummy/snapshot-write.png"></a>
 
 ### edit.html (edit)
-<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-edit.png">
+<img src="https://github.com/yingbbang/bnk-board-html-list/blob/main/board/assets/dummy/snapshot-edit.png">
 
 ### delete.html (delete)
-<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-delete.png">
+<img src="https://github.com/yingbbang/bnk-board-html-list/blob/main/board/assets/dummy/snapshot-delete.png">
 
 ### ERD
-<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/erd.png">
+<img src="https://github.com/yingbbang/bnk-board-html-list/blob/main/board/assets/dummy/erd.png">
 
 ### data-dictionary
-<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/data-dictionary.png">
+<img src="https://github.com/yingbbang/bnk-board-html-list/blob/main/board/assets/dummy/data-dictionary.png">
 
 ### code-definition
-<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/code-definition.png">
+<img src="https://github.com/yingbbang/bnk-board-html-list/blob/main/board/assets/dummy/code-definition.png">
 
 
 ## 1. 프로젝트 목적
