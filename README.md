@@ -24,7 +24,8 @@
 <img src="https://github.com/yingbbang/bnk-board-html-list/blob/main/board/assets/dummy/snapshot-write.png"></a>
 
 ### edit.html (edit)
-<img src="https://github.com/yingbbang/bnk-board-html-list/blob/main/board/assets/dummy/snapshot-edit.png">
+<a href="https://yingbbang.github.io/bnk-board-html-list/board/edit.html"> 
+<img src="https://github.com/yingbbang/bnk-board-html-list/blob/main/board/assets/dummy/snapshot-edit.png"></a>
 
 ### delete.html (delete)
 <img src="https://github.com/yingbbang/bnk-board-html-list/blob/main/board/assets/dummy/snapshot-delete.png">
