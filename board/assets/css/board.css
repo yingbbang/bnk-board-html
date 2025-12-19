@@ -506,3 +506,70 @@
   font-size: 14px;
   color: #444;
 }
+
+
+/* =================================================
+   Write / Gallery Image Fields (추가)
+   ================================================= */
+
+/* select, password, url도 동일한 폼 룩 적용 */
+.form-group select,
+.form-group input[type="password"],
+.form-group input[type="url"] {
+  width: 100%;
+  height: 40px;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background: #fff;
+}
+
+/* readonly 입력(작성자 등) 톤 다운 */
+.form-group input[readonly] {
+  background: #f9fafb;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+/* 체크박스 옵션(리스트/갤러리 노출) 한 줄 정렬 */
+.expose-options {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.expose-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.expose-options input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #2563eb; /* primary 톤 */
+}
+
+/* 썸네일/본문 이미지 입력 섹션 가독성 */
+#thumbUrl,
+#viewImageUrls {
+  margin-bottom: 8px;
+}
+
+/* 기존 첨부파일 삭제 체크 라인(EDIT용) */
+.attach-row .muted {
+  color: #6b7280;
+  font-size: 12px;
+  margin-left: 6px;
+}
+
+/* 모바일에서 작성자/비번 2열 깨짐 방지 */
+@media (max-width: 640px) {
+  .board-form .form-inline {
+    flex-direction: column;
+  }
+}

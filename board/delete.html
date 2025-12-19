@@ -1,41 +1,218 @@
-delete.html<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>게시글 삭제</title>
+  <title>BNK Board - Delete</title>
+
   <link rel="stylesheet" href="./assets/css/common.css">
+  <link rel="stylesheet" href="./assets/css/board.css">
+
+  <style>
+    /* delete 화면 전용 최소 스타일(공통 CSS에 영향 없음) */
+    .delete-box{
+      background:#fff;
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+      padding:24px;
+      margin-top:16px;
+    }
+    .delete-title{
+      font-size:18px;
+      font-weight:700;
+      margin-bottom:8px;
+    }
+    .delete-desc{
+      color:#6b7280;
+      line-height:1.5;
+      margin-bottom:16px;
+    }
+    .delete-info{
+      background:#f9fafb;
+      border:1px solid #eef2f7;
+      border-radius:10px;
+      padding:14px;
+      margin-bottom:18px;
+    }
+    .delete-info .row{
+      display:flex;
+      gap:10px;
+      padding:6px 0;
+    }
+    .delete-info .k{
+      width:90px;
+      color:#6b7280;
+      flex:0 0 auto;
+    }
+    .delete-info .v{
+      color:#111827;
+      word-break:break-word;
+    }
+    .delete-actions{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      margin-top:12px;
+    }
+    .btn-danger{
+      background:#dc2626;
+      border:1px solid #dc2626;
+      color:#fff;
+      padding:10px 14px;
+      border-radius:10px;
+      cursor:pointer;
+    }
+    .btn-ghost{
+      background:#fff;
+      border:1px solid #d1d5db;
+      color:#111827;
+      padding:10px 14px;
+      border-radius:10px;
+      cursor:pointer;
+    }
+  </style>
 </head>
 
 <body>
-<div class="container">
+  <div class="container">
 
-  <h1>게시글 삭제</h1>
+    <!-- =========================
+       1. 글로벌 영역 (로고 + 검색)
+       ========================= -->
+    <div class="board-global">
+      <div class="board-logo-row">
+        <a href="index.html" class="logo-link">
+          <img src="./assets/logo/topBrLogo2.png" alt="BNK 부산은행" class="board-logo">
+        </a>
+      </div>
 
-  <!-- 삭제 대상 요약 -->
-  <div class="delete-summary">
-    <p><strong>카테고리:</strong> <span id="delCategory"></span></p>
-    <p><strong>제목:</strong> <span id="delTitle"></span></p>
-    <p><strong>작성자:</strong> <span id="delWriter"></span></p>
-    <p><strong>작성일:</strong> <span id="delDate"></span></p>
+      <div class="board-search">
+        <input type="text" placeholder="검색어를 입력하세요" disabled>
+        <button disabled>검색</button>
+      </div>
+    </div>
+
+    <!-- =========================
+       2. 헤더
+       ========================= -->
+    <div class="board-header">
+      <div class="board-action-row">
+        <h1 class="board-title-text">게시글 삭제</h1>
+      </div>
+    </div>
+
+    <!-- =========================
+       3. 삭제 확인 박스
+       ========================= -->
+    <div class="delete-box">
+      <div class="delete-title">정말 삭제하시겠습니까?</div>
+      <div class="delete-desc">
+        삭제는 <b>물리삭제가 아닌 논리삭제</b>로 처리됩니다.<br>
+        (status = DELETED, deleted_at 저장)
+      </div>
+
+      <div class="delete-info" id="deleteInfo">
+        <!-- JS로 채움 -->
+      </div>
+
+      <div class="delete-actions">
+        <button class="btn-ghost" id="btnCancel">취소</button>
+        <button class="btn-danger" id="btnConfirmDelete">삭제</button>
+      </div>
+    </div>
+
+    <!-- 하단 이동 -->
+    <div style="margin-top:12px; text-align:right;">
+      <button class="btn-ghost" type="button" onclick="location.href='index.html'">목록</button>
+    </div>
+
   </div>
 
-  <!-- 삭제 사유 -->
-  <div class="delete-reason">
-    <label>삭제 사유 <span style="color:red">*</span></label>
-    <textarea id="deleteReason" placeholder="삭제 사유를 입력하세요"></textarea>
-  </div>
+  <!-- =========================
+       공통 스크립트
+       ========================= -->
+  <script src="./assets/js/storage.js"></script>
+  <script src="./assets/js/seed.js"></script>
+  <script src="./assets/js/util.js"></script>
 
-  <!-- 액션 -->
-  <div class="delete-actions">
-    <button id="btnConfirmDelete">삭제 실행</button>
-    <button onclick="history.back()">취소</button>
-  </div>
+  <!-- =========================
+       delete 전용 스크립트
+       ========================= -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const id = Number(Util.qs("id"));
 
-</div>
+      if (!id || Number.isNaN(id)) {
+        alert("잘못된 접근입니다.");
+        location.href = "index.html";
+        return;
+      }
 
-<script src="./assets/js/storage.js"></script>
-<script src="./assets/js/util.js"></script>
-<script src="./assets/js/delete.js"></script>
+      const boards = StorageDB.get("BOARD") || [];
+
+      // 임시 로그인 정보 (추후 인증 연동)
+      const currentUser = { role: "USER" }; // USER / ADMIN
+
+      const board = boards.find(b => b.id === id);
+
+      if (!board || board.status === "DELETED") {
+        alert("게시글이 존재하지 않습니다.");
+        location.href = "index.html";
+        return;
+      }
+
+      // 권한(임시): ADMIN만 삭제 허용
+      if (currentUser.role !== "ADMIN") {
+        alert("삭제 권한이 없습니다.");
+        location.href = `view.html?id=${id}`;
+        return;
+      }
+
+      // 화면 표시
+      const info = document.getElementById("deleteInfo");
+      info.innerHTML = `
+        <div class="row"><div class="k">번호</div><div class="v">${board.id}</div></div>
+        <div class="row"><div class="k">카테고리</div><div class="v">${Util.escape(board.category || "")}</div></div>
+        <div class="row"><div class="k">제목</div><div class="v">${Util.escape(board.title || "")}</div></div>
+        <div class="row"><div class="k">작성자</div><div class="v">${Util.escape(board.writer || "익명")}</div></div>
+        <div class="row"><div class="k">작성일</div><div class="v">${Util.fmt(board.created_at)}</div></div>
+      `;
+
+      // 취소
+      document.getElementById("btnCancel").addEventListener("click", () => {
+        location.href = `view.html?id=${id}`;
+      });
+
+      // 삭제 확정 (논리삭제)
+      document.getElementById("btnConfirmDelete").addEventListener("click", () => {
+        if (!confirm("삭제하시겠습니까?")) return;
+
+        const idx = boards.findIndex(b => b.id === id);
+        if (idx === -1) {
+          alert("게시글을 찾을 수 없습니다.");
+          location.href = "index.html";
+          return;
+        }
+
+        boards[idx].status = "DELETED";
+        boards[idx].deleted_at = new Date().toISOString();
+
+        StorageDB.set("BOARD", boards);
+
+        alert("삭제되었습니다.");
+        location.href = "index.html";
+      });
+    });
+  </script>
+
+  <!-- =========================
+       Footer
+       ========================= -->
+  <footer class="board-footer">
+    <a href="https://github.com/yingbbang" target="_blank" class="footer-github">
+      <img src="./assets/icons/icon-github.svg" alt="GitHub">
+      <span>© 2025 yingbbang</span>
+    </a>
+  </footer>
 
 </body>
 </html>
